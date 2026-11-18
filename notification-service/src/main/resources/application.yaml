@@ -1,0 +1,78 @@
+
+server:
+  port: 8084
+
+spring:
+  application:
+    name: notification-service
+
+  # MySQL Database Configuration
+  datasource:
+    url: jdbc:mysql://localhost:3306/notification_db
+    username: root
+    password: Teja@123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  # JPA / Hibernate Configuration
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    open-in-view: false
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: tejacheede7@gmail.com
+    password: uvmh nspu gium zdwk
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+  # Kafka Configuration
+  kafka:
+    bootstrap-servers: localhost:9092
+
+    # Consumer Configuration
+    consumer:
+      group-id: notification-group
+      auto-offset-reset: earliest
+      enable-auto-commit: false
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "com.teja.notification_service.dto"
+        spring.json.value.default.type: "com.teja.notification_service.dto.HrmsEvent"
+        spring.json.use.type.headers: false
+
+    # Producer Configuration (for later testing or publishing events)
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+    # Listener Configuration
+    listener:
+      ack-mode: record
+
+# Eureka Service Discovery
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+
+# Logging Configuration
+logging:
+  level:
+    root: INFO
+    com.teja.notification: DEBUG
+    org.springframework.kafka: INFO
+    org.hibernate.SQL: DEBUG
