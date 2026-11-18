@@ -1,0 +1,61 @@
+spring:
+  application:
+    name: auth-service
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/auth_db
+    username: root
+    password: Teja@123
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: tejacheede7@gmail.com
+    password: uvmh nspu gium zdwk
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+
+server:
+  port: 8083
+
+# Eureka Configuration
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+  instance:
+    prefer-ip-address: true
+
+# JWT Configuration
+jwt:
+  secret: mySuperSecretKeyForHrmsMicroservicesAuthentication2026SpringBootJWTSecretKey123
+  expiration: 86400000   # 24 Hours (Milliseconds)
+
+# Swagger Configuration
+springdoc:
+  api-docs:
+    enabled: true
+
+  swagger-ui:
+    path: /swagger-ui.html
+
+
+
+# Logging (Useful while learning JWT)
+logging:
+  level:
+    org.springframework.security: DEBUG
+    io.jsonwebtoken: DEBUG
